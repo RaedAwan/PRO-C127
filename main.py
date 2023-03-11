@@ -3,13 +3,13 @@ from bs4 import BeautifulSoup
 import time
 import csv
 START_URL = "https://exoplanets.nasa.gov/exoplanet-catalog/"
-browser = webdriver.Chrome("/Users/apoorvelous/Downloads/chromedriver")
+browser = webdriver.Chrome("Downloads/chromedriver_mac64")
 browser.get(START_URL)
 time.sleep(10)
 def scrape():
     headers = ["name", "light_years_from_earth", "planet_mass", "stellar_magnitude", "discovery_date"]
     planet_data = []
-    for i in range(0, 428):
+    for i in range(0, 212):
         soup = BeautifulSoup(browser.page_source, "html.parser")
         for ul_tag in soup.find_all("ul", attrs={"class", "exoplanet"}):
             li_tags = ul_tag.find_all("li")
@@ -23,7 +23,7 @@ def scrape():
                     except:
                         temp_list.append("")
             planet_data.append(temp_list)
-        browser.find_element_by_xpath('//*[@id="primary_column"]/footer/div/div/div/nav/span[2]/a').click()
+        browser.find_element_by_xpath('//*[@id="primary_column"]/div[1]/div[2]/div[1]/div/nav/span[2]/a').click()
     with open("scrapper_2.csv", "w") as f:
         csvwriter = csv.writer(f)
         csvwriter.writerow(headers)
